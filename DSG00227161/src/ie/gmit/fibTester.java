@@ -1,5 +1,7 @@
 package ie.gmit;
 
+import ie.gmit.server.Fibonacci;
+
 import java.rmi.RemoteException;
 
 public class fibTester {
