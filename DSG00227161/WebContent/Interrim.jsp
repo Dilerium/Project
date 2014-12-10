@@ -4,14 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>I want to make a fibo thingie cause magicals are greats for the healths.</title>
+<title>Insert title here</title>
 </head>
 <body>
 <form action="FibServlet">
-<input type="hidden" name="request-type" value="Add">
-Please enter number between 1 and 100<br>
-<input type = "text" name = "number" size = "20px">
-<input type = "submit" value = "submit">
+<input type="hidden" name="request-type" value="Poll">
+<label>Job Number: <%request.getAttribute("jobNumber");%></label>
+<label>Time: <%request.getAttribute("time");%></label>
 </form>
 </body>
 </html>

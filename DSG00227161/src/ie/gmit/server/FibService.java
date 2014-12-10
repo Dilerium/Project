@@ -14,6 +14,10 @@ public class FibService {
 		return random;
 	}
 	
+	public void addResult(FibRequest fr, String results){
+		this.outQ.put(fr.getJobNum(), results);
+	}
+	
 	public String getResult(int JobNum){
 		if(outQ.containsKey(JobNum));
 		String result = outQ.get(JobNum);
