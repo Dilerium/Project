@@ -31,7 +31,6 @@ public class FibServlet extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
-    	fs = new FibService();	
 	}
 
 	/**
@@ -39,26 +38,31 @@ public class FibServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		if(fs == null)
+		{
+			fs = new FibService();
+		}
 		String rType = request.getParameter("request-type").toString();
 		if(rType.equals("Add")){
 			String number = "";
 			number += fs.add(Integer.parseInt(request.getParameter("number")));
+			request.setAttribute("jobNumber", number);
+			request.setAttribute("timer", 10);
 			request.getRequestDispatcher("Interrim.jsp").forward(request, response);
 		}
 		else if (rType.equals("Poll")){
 			String jobNumber = "";
-			jobNumber += fs.add(Integer.parseInt(request.getParameter("jobNumber")));
+			//jobNumber += fs.add(Integer.parseInt(request.getParameter("jobNumber")));
 			String result = fs.getResult(Integer.parseInt(jobNumber));
 			if(result != null){
-				response.sendRedirect("Result.jsp");
+				request.setAttribute("results", result);
+				request.getRequestDispatcher("Results.jsp").forward(request, response);
 			}
 			else{
-				//response.addHeader();
-				response.sendRedirect("Interrim.jsp");
+				request.getRequestDispatcher("Interrim.jsp").forward(request, response);
 			}
 		}
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

@@ -9,8 +9,11 @@ public class FibService {
 	private Map<Integer, String> outQ = new HashMap<Integer, String>();
 	
 	public int add(int max){
-		int random = (int) Math.round(Math.random());
+		Random rand = new Random(System.currentTimeMillis());
+		int random = ((rand.nextInt(199) + 1));
 		inQ.add(new FibRequest(random, max));
+		System.out.println("Getting through service.add method!");
+		System.out.println("Job Number: " + random);
 		return random;
 	}
 	

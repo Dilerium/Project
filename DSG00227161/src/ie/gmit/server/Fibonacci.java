@@ -1,7 +1,5 @@
 package ie.gmit.server;
 
-import ie.gmit.RemoteFibonacci;
-
 import java.rmi.*;
 import java.rmi.server.*;
 import java.util.ArrayList;

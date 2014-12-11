@@ -8,8 +8,8 @@
 </head>
 <body>
 <form action="FibServlet">
-<label type = "text" name = "jobNumber" size = "20px" />
-<label type = "text" name = "results" size = "20px" />
+<label>Job Number: ${ jobNumber }</label><br>
+<label>Results: ${ result }</label>
 </form>
 </body>
 </html>
