@@ -42,24 +42,28 @@ public class FibServlet extends HttpServlet {
 		{
 			fs = new FibService();
 		}
-		String rType = request.getParameter("request-type").toString();
+		String rType = request.getSession().getAttribute("request-type").toString();
 		if(rType.equals("Add")){
-			String number = "";
-			number += fs.add(Integer.parseInt(request.getParameter("number")));
-			request.setAttribute("jobNumber", number);
-			request.setAttribute("timer", 10);
+			String jobNumber = "";
+			jobNumber += fs.add(Integer.parseInt(request.getParameter("number")));
+			request.getSession().setAttribute("jobNumber", jobNumber);
+			request.getSession().setAttribute("timer", 2);
 			request.getRequestDispatcher("Interrim.jsp").forward(request, response);
 		}
 		else if (rType.equals("Poll")){
-			String jobNumber = "";
-			//jobNumber += fs.add(Integer.parseInt(request.getParameter("jobNumber")));
-			String result = fs.getResult(Integer.parseInt(jobNumber));
-			if(result != null){
-				request.setAttribute("results", result);
-				request.getRequestDispatcher("Results.jsp").forward(request, response);
+			String results = "";
+			try{
+				results += fs.getResult(Integer.parseInt(request.getSession().getAttribute("jobNumber").toString()));
+			}
+			catch(Exception e){
+				e.getMessage();
+			}
+			if((!results.equals("") && results != null)){
+				request.getSession().setAttribute("results", results);
+				request.getRequestDispatcher("Result.jsp").forward(request, response);
 			}
 			else{
-				request.getRequestDispatcher("Interrim.jsp").forward(request, response);
+				request.getRequestDispatcher("Interrim.jsp").forward(request, response);			
 			}
 		}
 	}
