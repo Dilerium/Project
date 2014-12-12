@@ -1,8 +1,10 @@
 package ie.gmit.server;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,6 +33,18 @@ public class FibServlet extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
+		try {
+			fs = (FibService) Naming.lookup("rmi://127.0.0.1:1099/FibService");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -38,15 +52,6 @@ public class FibServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if(fs == null)
-		{
-			try {
-				fs = new FibService();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		String rType = request.getSession().getAttribute("request-type").toString();
 		if(rType.equals("Add")){
 			int number = Integer.parseInt(request.getParameter("number"));
@@ -55,12 +60,6 @@ public class FibServlet extends HttpServlet {
 			request.getSession().setAttribute("jobNumber", jobNumber);
 			request.getSession().setAttribute("timer", 2);
 			request.getRequestDispatcher("Interrim.jsp").forward(request, response);
-			try {
-				fs.genFib(number);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		else if (rType.equals("Poll")){
 			String results = "";
@@ -70,12 +69,12 @@ public class FibServlet extends HttpServlet {
 			catch(Exception e){
 				e.getMessage();
 			}
-			if((!results.equals("") && results != null)){
+			System.out.println(results);
+			if((results.equals("") || results == null || results.equals("null"))){
+				request.getRequestDispatcher("Interrim.jsp").forward(request, response);
+			}else{
 				request.getSession().setAttribute("results", results);
 				request.getRequestDispatcher("Result.jsp").forward(request, response);
-			}
-			else{
-				request.getRequestDispatcher("Interrim.jsp").forward(request, response);			
 			}
 		}
 	}
