@@ -9,7 +9,7 @@
 <body>
 <form action="FibServlet">
 <label>Job Number: ${ jobNumber }</label><br>
-<label>Results: ${ result }</label>
+<label>Results: ${ results }</label>
 </form>
 </body>
 </html>

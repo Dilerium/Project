@@ -40,15 +40,27 @@ public class FibServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		if(fs == null)
 		{
-			fs = new FibService();
+			try {
+				fs = new FibService();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		String rType = request.getSession().getAttribute("request-type").toString();
 		if(rType.equals("Add")){
+			int number = Integer.parseInt(request.getParameter("number"));
 			String jobNumber = "";
-			jobNumber += fs.add(Integer.parseInt(request.getParameter("number")));
+			jobNumber += fs.add(number);
 			request.getSession().setAttribute("jobNumber", jobNumber);
 			request.getSession().setAttribute("timer", 2);
 			request.getRequestDispatcher("Interrim.jsp").forward(request, response);
+			try {
+				fs.genFib(number);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else if (rType.equals("Poll")){
 			String results = "";

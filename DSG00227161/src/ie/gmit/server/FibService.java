@@ -1,6 +1,7 @@
 package ie.gmit.server;
 
 import java.io.IOException;
+import java.rmi.Naming;
 import java.util.*;
 import java.util.*;
 
@@ -12,9 +13,10 @@ public class FibService {
 	
 	private LinkedList<FibRequest> inQ = new LinkedList<FibRequest>();
 	private Map<Integer, String> outQ = new HashMap<Integer, String>();
+	private RemoteFibonacci fs;
 	
-	public FibService(){
-		//Fibonacci fib = new Fibonacci();
+	public FibService() throws Exception{
+		 fs = (Fibonacci) Naming.lookup("rmi://127.0.0.1:1099/Fibber_McGees");
 	}
 	
 	public int add(int max){
@@ -35,5 +37,11 @@ public class FibService {
 			return result;
 		}
 		return null;
+	}
+	
+	public void genFib(int number)throws Exception{
+		FibRequest value = inQ.get(number);
+		String results = fs.genFib(value.getMax());
+		addResult(value, results);
 	}
 }
