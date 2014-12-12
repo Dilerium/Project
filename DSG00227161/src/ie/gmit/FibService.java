@@ -1,4 +1,4 @@
-package ie.gmit.server;
+package ie.gmit;
 
 import java.rmi.*;
 

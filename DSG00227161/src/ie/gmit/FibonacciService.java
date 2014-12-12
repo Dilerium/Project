@@ -1,9 +1,9 @@
-package ie.gmit.server;
+package ie.gmit;
 
 import java.rmi.Naming;
 import java.rmi.registry.*;
 
-public class FibServant {
+public class FibonacciService {
 	
 	public static void main(String[] args) throws Exception{
 		LocateRegistry.createRegistry(1099);

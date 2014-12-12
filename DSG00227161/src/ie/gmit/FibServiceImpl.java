@@ -1,4 +1,4 @@
-package ie.gmit.server;
+package ie.gmit;
 
 import java.net.MalformedURLException;
 import java.rmi.*;
@@ -30,7 +30,7 @@ public class FibServiceImpl extends UnicastRemoteObject implements FibService {
 	}
 	
 	/* (non-Javadoc)
-	 * @see ie.gmit.server.FibService#add(int)
+	 * @see ie.gmit.FibService#add(int)
 	 */
 	public int add(int max){
 		Random rand = new Random(System.currentTimeMillis());
@@ -41,14 +41,14 @@ public class FibServiceImpl extends UnicastRemoteObject implements FibService {
 	}
 	
 	/* (non-Javadoc)
-	 * @see ie.gmit.server.FibService#addResult(ie.gmit.server.FibRequest, java.lang.String)
+	 * @see ie.gmit.FibService#addResult(ie.gmit.FibRequest, java.lang.String)
 	 */
 	public void addResult(FibRequest fr, String results){
 		this.outQ.put(fr.getJobNum(), results);
 	}
 	
 	/* (non-Javadoc)
-	 * @see ie.gmit.server.FibService#getResult(int)
+	 * @see ie.gmit.FibService#getResult(int)
 	 */
 	public String getResult(int JobNum){
 		if(outQ.containsKey(JobNum)){
@@ -61,7 +61,7 @@ public class FibServiceImpl extends UnicastRemoteObject implements FibService {
 	}
 	
 	/* (non-Javadoc)
-	 * @see ie.gmit.server.FibService#genFib()
+	 * @see ie.gmit.FibService#genFib()
 	 */
 	public void genFib(){
 		System.out.println(inQ.toString());
